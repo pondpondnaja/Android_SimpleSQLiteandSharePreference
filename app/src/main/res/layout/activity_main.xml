@@ -20,4 +20,13 @@
         android:layout_centerHorizontal="true"
         android:text="SELECT" />
 
+    <Button
+        android:id="@+id/go_next"
+        android:text="NEXT"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/select_btn"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

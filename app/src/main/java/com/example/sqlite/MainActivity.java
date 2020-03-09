@@ -1,5 +1,6 @@
 package com.example.sqlite;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     SQLiteDatabase db;
-    Button insert, select;
+    Button insert, select, next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         insert = findViewById(R.id.insert_btn);
         select = findViewById(R.id.select_btn);
+        next = findViewById(R.id.go_next);
 
         final myDB myDb = new myDB(MainActivity.this);
         myDb.getWritableDatabase(); // First method
@@ -55,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String[] arrData = myDb.SelectData("1");
                 if (arrData == null) {
-                    Toast.makeText(MainActivity.this, "Not found Data!",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Not found Data!", Toast.LENGTH_LONG).show();
                 } else {
                     // arrData[0] MemberID
                     // arrData[0] Name
@@ -64,7 +65,17 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "MemberID = " + arrData[0]
                                     + "," + arrData[1] + "," + arrData[2],
                             Toast.LENGTH_LONG).show();
+
+                    dataHelper helper = new dataHelper(MainActivity.this);
+                    helper.createSession(arrData[1], arrData[2]);
                 }
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ac2.class));
             }
         });
     }
